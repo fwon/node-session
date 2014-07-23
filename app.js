@@ -6,6 +6,7 @@
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
+  , movie = require('./routes/movie')
   , http = require('http')
   , path = require('path')
   , ejs = require('ejs')
@@ -68,6 +69,12 @@ app.get('/logout', authentication);
 app.get('/logout', routes.logout);
 app.get('/home', authentication);
 app.get('/home', routes.home);
+
+console.log(movie);
+app.get('/movie/add', movie.movieAdd);
+app.post('/movie/add', movie.doMovieAdd);
+app.get('/movie/:name', movie.movieAdd);
+app.get('/movie/json/:name', movie.movieJSON);
 
 function authentication(req, res, next) {
   if (!req.session.user) {
