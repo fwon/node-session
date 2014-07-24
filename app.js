@@ -10,6 +10,8 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , ejs = require('ejs')
+  ,log4js = require('./log').log4js
+  ,logger = require('./log').logger('index')
   , SessionStore = require('session-mongoose')(express);
   var store = new SessionStore({
     url: "mongodb://localhost/session",
@@ -50,6 +52,7 @@ app.configure(function(){
     next();
   });
 
+  app.use(log4js.connectLogger(logger, {level:'auto', format:':method :url'}));
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 });

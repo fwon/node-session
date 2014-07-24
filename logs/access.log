@@ -1,0 +1,5 @@
+[2014-07-25 00:04:44.417] [INFO] normal - GET /javascripts/movie.js
+[2014-07-25 00:04:44.417] [INFO] normal - GET /stylesheets/bootstrap.min.css
+[2014-07-25 00:04:44.418] [INFO] normal - GET /javascripts/jquery-1.9.1.min.js
+[2014-07-25 00:04:44.505] [INFO] normal - GET /javascripts/movie.json
+[2014-07-25 00:04:44.755] [ERROR] normal - GET /javascripts/jquery.min.map

@@ -2,10 +2,13 @@
 /*
  * GET home page.
  */
-var Movie = require('./controllers/movie.js');
+var Movie = require('./controllers/movie');
 var $ = require('jQuery');
+var logger = require('./log').logger('index');
 
 exports.index = function(req, res){
+    console.log("This is an index page!");
+    logger.info("This is an index page! -- log4js");
     res.render('index', { title: 'Express'});
 };
 exports.login = function(req, res){
