@@ -3,20 +3,15 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
-  , movie = require('./routes/movie')
-  , http = require('http')
-  , path = require('path')
-  , ejs = require('ejs')
-  ,log4js = require('./log').log4js
-  ,logger = require('./log').logger('index')
-  , SessionStore = require('session-mongoose')(express);
-  var store = new SessionStore({
-    url: "mongodb://localhost/session",
-    interval: 120000
-  });
+var express = require('express'),
+  routes = require('./routes'),
+  user = require('./routes/user'),
+  movie = require('./routes/movie'),
+  http = require('http'),
+  path = require('path'),
+  ejs = require('ejs'),
+  log4js = require('./log').log4js,
+  logger = require('./log').logger('index');
 
 var app = express();
 
@@ -33,24 +28,19 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   //session
-  app.use(express.cookieParser());
-  app.use(express.cookieSession({secret: 'fens.me'}));
-  app.use(express.session({
-    secret: 'fens.me',
-    store: store,
-    cookie: {maxAge: 900000}
-  }));
+  // app.use(express.cookieParser());
+  
   //页面locals赋值session
-  app.use(function(req, res, next) {
-    res.locals.user = req.session.user;
-    var err = req.session.error;
-    delete req.session.error;
-    res.locals.message = '';
-    if(err) {
-      res.locals.message = '<div class="alert alert-error">' + err + '</div>';
-    }
-    next();
-  });
+  // app.use(function(req, res, next) {
+  //   res.locals.user = req.session.user;
+  //   var err = req.session.error;
+  //   delete req.session.error;
+  //   res.locals.message = '';
+  //   if(err) {
+  //     res.locals.message = '<div class="alert alert-error">' + err + '</div>';
+  //   }
+  //   next();
+  // });
 
   app.use(log4js.connectLogger(logger, {level:'auto', format:':method :url'}));
   app.use(app.router);
@@ -80,17 +70,17 @@ app.get('/movie/:name', movie.movieAdd);
 app.get('/movie/json/:name', movie.movieJSON);
 
 function authentication(req, res, next) {
-  if (!req.session.user) {
-    req.session.error='请先登陆';
-    return res.redirect('/login');
-  }
+  // if (!req.session.user) {
+  //   req.session.error='请先登陆';
+  //   return res.redirect('/login');
+  // }
   next();
 }
 function notAuthentication(req, res, next) {
-  if (req.session.user) {
-    req.session.error='已登陆';
-    return res.redirect('/');
-  }
+  // if (req.session.user) {
+  //   req.session.error='已登陆';
+  //   return res.redirect('/');
+  // }
   next();
 }
 

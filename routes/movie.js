@@ -1,4 +1,3 @@
-var Movie = require('./../models/Movie.js');
 exports.movieAdd = function(req, res) {
     if(req.params.name) {
         return res.render('movie',{
@@ -14,21 +13,21 @@ exports.movieAdd = function(req, res) {
         });
     }
 };
-exports.doMovieAdd = function(req, res) {
-    console.log(req.body.content);
-    var json = req.body.content;
-    if(json._id){//update
+// exports.doMovieAdd = function(req, res) {
+//     console.log(req.body.content);
+//     var json = req.body.content;
+//     if(json._id){//update
     
-    } else {//insert
-        Movie.save(json, function(err){
-            if(err) {
-                res.send({'success':false,'err':err});
-            } else {
-                res.send({'success':true});
-            }
-        });
-    }
-};
+//     } else {//insert
+//         Movie.save(json, function(err){
+//             if(err) {
+//                 res.send({'success':false,'err':err});
+//             } else {
+//                 res.send({'success':true});
+//             }
+//         });
+//     }
+// };
 exports.movieJSON = function(req, res) {
     var url = '/javascripts/movie.json';
     var movie = $('#c_editor').attr('movie');
