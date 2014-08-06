@@ -11,25 +11,10 @@ var express = require('express'),
   path = require('path'),
   ejs = require('ejs'),
   MemcachedStore = require('connect-memcached')(express.session),
-  mysql = require('mysql'),
   log4js = require('./log').log4js,
-  logger = require('./log').logger('index');
-
-var connection = mysql.createConnection({
-  host: 'localhost',
-  database: 'syss',
-  user: 'root',
-  password: '1212'
-});
-connection.connect();
-connection.query('SELECT * from syss_mates where id=33', function(err, rows, fields) {
-  if(err) {
-    throw err;
-  }
-  console.log('this user is:' + rows[0]['beg_time']);
-});
-
-connection.end();
+  logger = require('./log').logger('index'),
+  database = require('./database'),
+  settings = require('./settings');
 
 var app = express();
 
@@ -53,7 +38,7 @@ app.configure(function(){
     key: 'test',
     proxy: 'true',
     store: new MemcachedStore({
-      hosts: ['127.0.0.1:11211']
+      hosts: [settings.memcachedHost]
     })
   }));
 
@@ -87,17 +72,17 @@ app.get('/movie/:name', movie.movieAdd);
 app.get('/movie/json/:name', movie.movieJSON);
 
 function authentication(req, res, next) {
-  // if (!req.session.user) {
-  //   req.session.error='请先登陆';
-  //   return res.redirect('/login');
-  // }
+  if (!req.session.user) {
+    req.session.error='请先登陆';
+    return res.redirect('/login');
+  }
   next();
 }
 function notAuthentication(req, res, next) {
-  // if (req.session.user) {
-  //   req.session.error='已登陆';
-  //   return res.redirect('/');
-  // }
+  if (req.session.user) {
+    req.session.error='已登陆';
+    return res.redirect('/');
+  }
   next();
 }
 

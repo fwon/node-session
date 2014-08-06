@@ -9,7 +9,8 @@
     "express": "3.0.3",
     "ejs": "*",
     "connect-memcached": "0.1.0",
-    "mysql": "2.4.1"
+    "mysql": "2.4.1",
+    "log4js": "0.6.16"
   },
   "description": "nodejs-session-memcached demo",
   "main": "app.js",
