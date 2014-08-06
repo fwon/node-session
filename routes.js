@@ -9,7 +9,12 @@ var logger = require('./log').logger('index');
 exports.index = function(req, res){
     console.log("This is an index page!");
     logger.info("This is an index page! -- log4js");
-    res.render('index', { title: 'Express'});
+    if(req.session.views) {
+        ++req.session.views;
+    } else {
+        req.session.views = 1;
+    }
+    res.render('index', { title: '查看次数：' + req.session.views});
 };
 exports.login = function(req, res){
     res.render('login', { title: '用户登陆'});

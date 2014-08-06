@@ -10,6 +10,7 @@ var express = require('express'),
   http = require('http'),
   path = require('path'),
   ejs = require('ejs'),
+  MemcachedStore = require('connect-memcached')(express.session),
   log4js = require('./log').log4js,
   logger = require('./log').logger('index');
 
@@ -27,20 +28,19 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  //session
-  // app.use(express.cookieParser());
   
-  //页面locals赋值session
-  // app.use(function(req, res, next) {
-  //   res.locals.user = req.session.user;
-  //   var err = req.session.error;
-  //   delete req.session.error;
-  //   res.locals.message = '';
-  //   if(err) {
-  //     res.locals.message = '<div class="alert alert-error">' + err + '</div>';
-  //   }
-  //   next();
-  // });
+  //session
+  app.use(express.cookieParser());
+  app.use(express.session({
+    secret: 'CatOnKeyboard',
+    key: 'test',
+    proxy: 'true',
+    store: new MemcachedStore({
+      hosts: ['127.0.0.1:11211']
+    })
+  }));
+
+
 
   app.use(log4js.connectLogger(logger, {level:'auto', format:':method :url'}));
   app.use(app.router);
