@@ -11,8 +11,25 @@ var express = require('express'),
   path = require('path'),
   ejs = require('ejs'),
   MemcachedStore = require('connect-memcached')(express.session),
+  mysql = require('mysql'),
   log4js = require('./log').log4js,
   logger = require('./log').logger('index');
+
+var connection = mysql.createConnection({
+  host: 'localhost',
+  database: 'syss',
+  user: 'root',
+  password: '1212'
+});
+connection.connect();
+connection.query('SELECT * from syss_mates where id=33', function(err, rows, fields) {
+  if(err) {
+    throw err;
+  }
+  console.log('this user is:' + rows[0]['beg_time']);
+});
+
+connection.end();
 
 var app = express();
 
