@@ -1,5 +1,5 @@
 {
-  "name": "application-name",
+  "name": "node-session",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,5 +10,22 @@
     "ejs": "*",
     "connect-memcached": "0.1.0",
     "mysql": "2.4.1"
-  }
+  },
+  "description": "nodejs-session-memcached demo",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fwon/node-session.git"
+  },
+  "keywords": [
+    "session",
+    "memcached"
+  ],
+  "author": "fwon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fwon/node-session/issues"
+  },
+  "homepage": "https://github.com/fwon/node-session"
 }
